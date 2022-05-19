@@ -34,7 +34,10 @@ class MainActivity : ComponentActivity() {
             ComposePart2Theme {
                 Surface(color = MaterialTheme.colors.background) {
 
-                    Greeting()
+                   //Greeting()
+                    GoogleButton {
+                        
+                    }
                 }
             }
 
@@ -47,7 +50,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(){
-    Column(modifier = Modifier.fillMaxSize().padding(20.dp),
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(20.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Top,
     ) {
@@ -125,5 +130,8 @@ fun Greeting(){
 fun DefaultPreview() {
     ComposePart2Theme {
         Greeting()
+        GoogleButton() {
+            
+        }
     }
 }
