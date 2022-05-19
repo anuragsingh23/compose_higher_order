@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -14,7 +16,6 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,20 +25,25 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import coil.transform.GrayscaleTransformation
+import com.example.composepart2.repository.PersonRepository
 import com.example.composepart2.ui.theme.ComposePart2Theme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalCoilApi::class)
+    //@OptIn(ExperimentalCoilApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+                val repository = PersonRepository()
+                val data = repository.getAllData()
 
-            ComposePart2Theme {
-                Surface(color = MaterialTheme.colors.background) {
+            LazyColumn(
+                contentPadding = PaddingValues(2.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ){
 
-                   //Greeting()
-                    LoadImage()
-                }
+                items(items = data) {
+                    CustomItem(person = it)
+        }
             }
 
         }
@@ -159,7 +165,7 @@ fun LoadImage(){
 fun DefaultPreview() {
     ComposePart2Theme {
         Column(modifier = Modifier.fillMaxSize()) {
-            LoadImage()
+
         }
     }
 }
