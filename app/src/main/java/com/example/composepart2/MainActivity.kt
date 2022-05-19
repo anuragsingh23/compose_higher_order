@@ -3,30 +3,31 @@ package com.example.composepart2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
+import coil.transform.GrayscaleTransformation
 import com.example.composepart2.ui.theme.ComposePart2Theme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalCoilApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -35,9 +36,7 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
 
                    //Greeting()
-                    GoogleButton {
-                        
-                    }
+                    LoadImage()
                 }
             }
 
@@ -123,15 +122,44 @@ fun Greeting(){
 
 }
 
+@ExperimentalCoilApi
+@Composable
+fun LoadImage(){
+
+    Box(modifier = Modifier
+        .width(150.dp)
+        .height(150.dp),
+    contentAlignment = Alignment.Center,
+    )
+    {
+        val painter = rememberImagePainter(data = "https://images.app.goo.gl/7NLShvRasnZ9hiXA8",
+        builder = {
+            placeholder(R.drawable.ic_google_logo)
+            error(R.drawable.ic_launcher_background)
+            crossfade(1000)
+            transformations(
+                GrayscaleTransformation(),
+                CircleCropTransformation()
+            )
+        }
+        )
+        val painterState = painter.state
+        Image(painter = painter, contentDescription = "")
+        if (painterState is ImagePainter.State.Loading){
+            CircularProgressIndicator()
+        }
+    }
+}
 
 
+
+@OptIn(ExperimentalCoilApi::class)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposePart2Theme {
-        Greeting()
-        GoogleButton() {
-            
+        Column(modifier = Modifier.fillMaxSize()) {
+            LoadImage()
         }
     }
 }
