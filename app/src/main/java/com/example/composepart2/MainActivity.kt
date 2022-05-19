@@ -22,6 +22,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.composepart2.ui.CardExpandable
 import com.example.composepart2.ui.theme.ComposePart2Theme
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
 
             ComposePart2Theme {
                     Surface(color = MaterialTheme.colors.background) {
-                        Greeting("inder","63")
+
+                        CardExpandable()
                 }
             }
                 }
