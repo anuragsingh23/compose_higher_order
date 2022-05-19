@@ -14,12 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composepart2.ui.theme.ComposePart2Theme
-import com.example.composepart2.ui.theme.Typography
-import java.security.AllPermission
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
             ComposePart2Theme {
                     Surface(color = MaterialTheme.colors.background) {
-                   Greeting()
+                        Greeting("inder","63")
                 }
             }
                 }
@@ -40,20 +43,29 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 //Box compose function
-fun Greeting(){
-    Box(modifier = Modifier.fillMaxSize(),
-    contentAlignment = Alignment.TopCenter){
-        Box(modifier = Modifier
-            .height(400.dp)
-            .width(400.dp)
-            .verticalScroll(rememberScrollState())
-            .background(color = Color.Green)) {
-
-            Text(text = "i am anurag shekhawat", color = MaterialTheme.colors.onPrimary, fontSize = 60.sp)
-
+fun Greeting(
+    normal :String,
+    script : String
+){
+    Text(text = buildAnnotatedString {
+        withStyle (
+            style = SpanStyle(
+                fontSize = MaterialTheme.typography.h3.fontSize
+            )
+                ){
+            append(normal)
         }
-
-    }
+    })
+    Text(text = buildAnnotatedString {
+        withStyle (
+            style = SpanStyle(
+                fontSize = MaterialTheme.typography.h6.fontSize,
+                baselineShift = BaselineShift.Superscript
+            )
+        ){
+            append(normal)
+        }
+    })
 }
 
 
@@ -62,6 +74,6 @@ fun Greeting(){
 @Composable
 fun DefaultPreview() {
     ComposePart2Theme {
-        Greeting()
+        Greeting("inder","63")
     }
 }
